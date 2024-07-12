@@ -3,9 +3,11 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import { Link } from 'react-router-dom'; 
+import { Link, useNavigate } from 'react-router-dom'; 
 
 export default function LoginCard() {
+  const navigate = useNavigate();
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -13,7 +15,11 @@ export default function LoginCard() {
     const password = data.get('password');
     console.log('Email:', email);
     console.log('Password:', password);
-  
+
+    // Perform login logic here if needed
+
+    // Navigate to home page after successful login
+    navigate('/');
   };
 
   return (
@@ -61,7 +67,7 @@ export default function LoginCard() {
             variant="contained"
             color="primary"
             fullWidth
-            sx={{ mt: 2 }}
+            sx={{ mt: 2, background: 'linear-gradient(135deg, #3f51b5 0%, #9c27b0 100%)' }}
           >
             Login
           </Button>

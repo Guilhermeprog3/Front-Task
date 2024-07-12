@@ -17,6 +17,7 @@ export default function SignupCard() {
     console.log('Password:', password);
     console.log('Name:', name);
     console.log('Birth Date:', birthDate);
+    // Perform signup logic here if needed
   };
 
   return (
@@ -85,14 +86,25 @@ export default function SignupCard() {
             variant="contained"
             color="primary"
             fullWidth
-            sx={{ mt: 2 }}
+            sx={{ mt: 2, background: 'linear-gradient(135deg, #3f51b5 0%, #9c27b0 100%)' }}
           >
             Criar Conta
           </Button>
         </form>
         <Box sx={{ mt: 2 }}>
           <Link to="/login" style={{ textDecoration: 'none' }}>
-            <Button variant="outlined" fullWidth sx={{ color: 'white', borderColor: 'white' }}>
+            <Button
+              variant="outlined"
+              fullWidth
+              sx={{
+                color: 'white',
+                borderColor: 'white',
+                background: 'linear-gradient(135deg, #3f51b5 0%, #9c27b0 100%)',
+                '&:hover': {
+                  background: 'linear-gradient(135deg, #3f51b5 0%, #9c27b0 100%)',
+                },
+              }}
+            >
               Voltar para Login
             </Button>
           </Link>
