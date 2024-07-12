@@ -5,8 +5,12 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 
 export default function SignupCard() {
+  const navigate = useNavigate();
+
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -14,11 +18,6 @@ export default function SignupCard() {
     const password = data.get("password");
     const name = data.get("name");
     const birthDate = data.get("birthDate");
-
-    console.log("Email:", email);
-    console.log("Password:", password);
-    console.log("Name:", name);
-    console.log("Birth Date:", birthDate);
 
     const url = "http://localhost:4000/usuario/create";
 
@@ -43,7 +42,7 @@ export default function SignupCard() {
       .catch((error) => {
         console.error("Erro:", error);
       });
-    navigate("/home");
+    navigate("/login");
   };
 
   return (

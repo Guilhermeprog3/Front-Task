@@ -1,35 +1,39 @@
-import React from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import Grid from '@mui/material/Grid';
 import TaskCard from '../componentes/card';
 import FloatingActionButtons from '../componentes/click';
+import { AuthContext } from ".././context/authContext";
+import axios from 'axios';
 
 function Home() {
-  const tasks = [
-    { id: 1, title: 'Tarefa 1' },
-    { id: 2, title: 'Tarefa 2' },
-    { id: 3, title: 'Tarefa 3' },
-    { id: 4, title: 'Tarefa 4' },
-    { id: 5, title: 'Tarefa 5' },
-    { id: 6, title: 'Tarefa 6' },
-    { id: 1, title: 'Tarefa 1' },
-    { id: 2, title: 'Tarefa 2' },
-    { id: 3, title: 'Tarefa 3' },
-    { id: 4, title: 'Tarefa 4' },
-    { id: 5, title: 'Tarefa 5' },
-    { id: 6, title: 'Tarefa 6' },
-    { id: 1, title: 'Tarefa 1' },
-    { id: 2, title: 'Tarefa 2' },
-    { id: 3, title: 'Tarefa 3' },
-    { id: 4, title: 'Tarefa 4' },
-    { id: 5, title: 'Tarefa 5' },
-    { id: 6, title: 'Tarefa 6' },
-  ];
+  const { user } = useContext(AuthContext);
+  const [tasks, setTasks] = useState([]);
+
+  useEffect(() => {
+    const fetchTasks = async () => {
+      try {
+        const response = await axios.get(`http://localhost:4000/tarefas/${user}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("@Auth:token")}`
+          }
+        });
+        setTasks(response.data); 
+        console.log(response);
+      } catch (error) {
+        console.error('Erro ao buscar tarefas:', error);
+      }
+    };
+
+    fetchTasks();
+  }, [user]); 
+
+
 
   return (
     <div style={{ background: 'linear-gradient(135deg, #0D47A1 0%, #000000 100%)', minHeight: '100vh', padding: '2rem' }}>
-      <Grid container spacing={0}>
+      <Grid container spacing={3}>
         {tasks.map((task) => (
-          <Grid item key={task.id} xs={2} sm={2} md={7}>
+          <Grid item key={task.id} xs={12} sm={6} md={4}>
             <TaskCard title={task.title} />
           </Grid>
         ))}
@@ -37,8 +41,10 @@ function Home() {
           <FloatingActionButtons />
         </Grid>
       </Grid>
+      <p>{tasks}</p>
     </div>
   );
 }
 
 export default Home;
+

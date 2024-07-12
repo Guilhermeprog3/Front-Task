@@ -1,23 +1,27 @@
+import { useState, useEffect } from "react";
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 import { AuthContext } from "../../context/authContext";
 import { useContext } from "react";
 
+
 export default function LoginCard() {
+  const [loading, setLoading] = useState(false);
   const { signIn, user } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true);
     const data = new FormData(event.currentTarget);
     const email = data.get("email");
     const password = data.get("password");
-
-    const url = "http://localhost:4000/login";
-
+    
     const dataJson = {
       email: email,
       password: password,
@@ -28,31 +32,15 @@ export default function LoginCard() {
     } catch (error) {
       console.error("Erro ao fazer login:", error);
     } finally {
-      //setLoading(false);
+      setLoading(false);
     }
-
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-
-    /*React.useEffect(() => {
-      if (user) {
-        navigate("/");
-      }
-    }, [user, navigate]);
-    */
-
-    axios
-      .post(url, dataJson, config)
-      .then((response) => {
-        console.log("Resposta:", response.dataJson);
-      })
-      .catch((error) => {
-        console.error("Erro:", error);
-      });
   };
+
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, [user, navigate]);
 
   return (
     <Box
