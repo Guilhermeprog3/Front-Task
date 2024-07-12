@@ -3,9 +3,12 @@
 Descrição do Projeto<br>
 
 ### 🛠️ Construído com:
-Este projeto é uma aplicação web Full Stack desenvolvida com React e Material-UI.<br>
 
 [![My Skills](https://skillicons.dev/icons?i=react,materialui,vite)](https://skillicons.dev)
+<br>
+Este projeto é uma aplicação web Full Stack desenvolvida com React e Material-UI.<br>
+
+
 
 ### 🔧Instruções de Instalação e Configuração no Terminal<br>
 Clone o Repositório:<br>
