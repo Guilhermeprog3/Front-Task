@@ -23,13 +23,13 @@ export default function LoginCard() {
         justifyContent: 'center',
         alignItems: 'center',
         height: '100vh',
-        background: 'linear-gradient(135deg, #3f51b5 0%, #9c27b0 100%)',
       }}
     >
       <Paper
         elevation={3}
         sx={{
-          width: 300,
+          width: 320,
+          height: 320,
           padding: 3,
           textAlign: 'center',
           color: 'white',
@@ -67,7 +67,7 @@ export default function LoginCard() {
           </Button>
         </form>
         <Box sx={{ mt: 2 }}>
-          <Link to="/signup" style={{ textDecoration: 'none' }}>
+          <Link to="/criar" style={{ textDecoration: 'none' }}>
             <Button variant="outlined" fullWidth sx={{ color: 'white', borderColor: 'white' }}>
               Criar Conta
             </Button>

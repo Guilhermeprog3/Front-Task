@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 
 const card = (navigate) => (
   <React.Fragment>
-    <CardContent sx={{ display: 'flex', flexDirection: 'column', textAlign: 'center', marginTop: 15,background: 'linear-gradient(135deg, #0D47A1 0%, #000000 100%)', }}>
+    <CardContent sx={{ display: 'flex', flexDirection: 'column', textAlign: 'center', marginTop: 25,}}>
       <Typography
         component="div"
         sx={{
@@ -57,12 +57,14 @@ const card = (navigate) => (
   </React.Fragment>
 );
 
+
 export default function OutlinedCard() {
   const navigate = useNavigate();
 
   return (
-    <Box sx={{ maxWidth: 1440, backgroundColor: 'white' }}>
-      <Card variant="none" sx={{ backgroundColor: 'white' }}>
+
+    <Box sx={{ maxWidth: 1440,marginLeft:'12rem'}}>
+      <Card variant="none" sx={{ }}>
         {card(navigate)}
       </Card>
     </Box>

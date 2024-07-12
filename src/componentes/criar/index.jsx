@@ -26,7 +26,6 @@ export default function SignupCard() {
         justifyContent: 'center',
         alignItems: 'center',
         height: '100vh',
-        background: 'linear-gradient(135deg, #3f51b5 0%, #9c27b0 100%)',
       }}
     >
       <Paper

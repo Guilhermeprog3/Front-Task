@@ -1,10 +1,13 @@
 import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
 export default function SimplePaper() {
+  const navigate = useNavigate();
+
   const handleSubmit = (event) => {
     event.preventDefault();
     // Lógica para lidar com o formulário
@@ -15,6 +18,9 @@ export default function SimplePaper() {
     console.log('Task Name:', taskName);
     console.log('End Date:', endDate);
     console.log('Description:', description);
+
+    // Navigate back to home page
+    navigate('/');
   };
 
   return (
@@ -24,7 +30,6 @@ export default function SimplePaper() {
         justifyContent: 'center',
         alignItems: 'center',
         height: '100vh',
-        backgroundColor: '#f0f4f8', // Cor de fundo da página
       }}
     >
       <Paper
@@ -71,8 +76,8 @@ export default function SimplePaper() {
             InputLabelProps={{ style: { color: 'white' } }}
             InputProps={{ style: { color: 'white' } }}
           />
-          <Button type="submit" variant="contained" color="primary" sx={{ width: '10rem', margin: '1rem auto', display: 'block' }}>
-            Cadastrar
+          <Button type="submit" variant="contained" color="primary" sx={{ width: '10rem', margin: '1rem auto', display: 'block',background: 'linear-gradient(135deg, #3f51b5 0%, #9c27b0 100%)'}}>
+            Cadastra
           </Button>
         </form>
       </Paper>

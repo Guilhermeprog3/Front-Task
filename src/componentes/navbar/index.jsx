@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -19,9 +19,10 @@ const pages = [
   { name: 'Pricing', path: '/pricing' }, // Atualize com a rota correta se existir
   { name: 'CREDITOS', path: '/creditos' } // Atualize com a rota correta se existir
 ];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const settings = ['Logout','Login'];
 
 function ResponsiveAppBar() {
+  const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -39,6 +40,13 @@ function ResponsiveAppBar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const handleLogout = () => {
+    navigate('/login');
+  };
+  const handle =()=>{
+    navigate('/criar');
+  }
 
   return (
     <AppBar position="static" sx={{ background: 'linear-gradient(135deg, #3f51b5 0%, #9c27b0 100%)' }}>
@@ -157,7 +165,18 @@ function ResponsiveAppBar() {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <MenuItem
+                  key={setting}
+                  onClick={() => {
+                    handleCloseUserMenu();
+                    if (setting === 'Login') {
+                      handleLogout();
+                    }
+                    else if (setting === 'Logout'){
+                      handle();
+                    }
+                  }}
+                >
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}
