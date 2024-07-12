@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import axios from 'axios';
 
 export default function SimplePaper() {
   const navigate = useNavigate();
@@ -15,9 +16,6 @@ export default function SimplePaper() {
     const taskName = data.get('taskName');
     const endDate = data.get('endDate');
     const description = data.get('description');
-    console.log('Task Name:', taskName);
-    console.log('End Date:', endDate);
-    console.log('Description:', description);
 
     // Navigate back to home page
     navigate('/');

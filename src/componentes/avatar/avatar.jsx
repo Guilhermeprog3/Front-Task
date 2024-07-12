@@ -1,6 +1,12 @@
+<<<<<<< HEAD
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
+=======
+import * as React from 'react';
+import Avatar from '@mui/material/Avatar';
+import Stack from '@mui/material/Stack';
+>>>>>>> 515066e2cfb461a179f89a158ef6ced16e8042a7
 
 export default function SizeAvatars() {
   return (
@@ -12,4 +18,8 @@ export default function SizeAvatars() {
       />
     </Stack>
   );
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 515066e2cfb461a179f89a158ef6ced16e8042a7

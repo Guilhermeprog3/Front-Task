@@ -29,6 +29,7 @@ export default function LoginCard() {
       console.error("Erro ao fazer login:", error);
     } finally {
       //setLoading(false);
+
     }
 
     const config = {
@@ -99,7 +100,7 @@ export default function LoginCard() {
             variant="contained"
             color="primary"
             fullWidth
-            sx={{ mt: 2 }}
+            sx={{ mt: 2, background: 'linear-gradient(135deg, #3f51b5 0%, #9c27b0 100%)' }}
           >
             Login
           </Button>
@@ -115,6 +116,7 @@ export default function LoginCard() {
             </Button>
           </Link>
         </Box>
+        <p>{sizeResponse}</p>
       </Paper>
     </Box>
   );

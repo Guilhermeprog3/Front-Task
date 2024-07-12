@@ -1,30 +1,26 @@
-# React + TypeScript + Vite
+ToDoList<br>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Descrição do Projeto<br>
+Este projeto é uma aplicação web Full Stack desenvolvida com React e Material-UI.<br>
 
-Currently, two official plugins are available:
+Instruções de Instalação e Configuração no Terminal<br>
+Clone o Repositório:<br>
+git clone https://github.com/Guilhermeprog3/Front-Task.git<br>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Entre na pasta da aplicação:<br>
+cd Front-Task<br>
 
-## Expanding the ESLint configuration
+Crie a aplicação ViteJS:<br>
+npm create vite@latest<br>
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+Instale as Dependências:<br>
+npm install<br>
 
-- Configure the top-level `parserOptions` property like this:
+Instale o react-router-dom(roteamento entre paginas(transição, conexão de páginas)):<br>
+npm install react-router-dom<br>
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+Inicie o Servidor de Desenvolvimento:<br>
+npm run dev<br>
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+Certifique-se de que o backend está rodando na URL especificada. <br>
+
