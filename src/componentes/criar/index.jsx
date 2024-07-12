@@ -17,7 +17,6 @@ export default function SignupCard() {
     const email = data.get("email");
     const password = data.get("password");
     const name = data.get("name");
-    const birthDate = data.get("birthDate");
 
     const url = "http://localhost:4000/usuario/create";
 
