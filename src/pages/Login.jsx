@@ -1,5 +1,4 @@
-import SimplePaper from "../componentes/login"
-
+import SimplePaper from "../componentes/login";
 
 
 

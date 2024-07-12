@@ -3,7 +3,10 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import { Link, useNavigate } from 'react-router-dom'; 
+import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+
+const [setResponse, sizeResponse] = useState("");
 
 export default function LoginCard() {
   const navigate = useNavigate();
@@ -13,13 +16,33 @@ export default function LoginCard() {
     const data = new FormData(event.currentTarget);
     const email = data.get('email');
     const password = data.get('password');
-    console.log('Email:', email);
-    console.log('Password:', password);
 
-    // Perform login logic here if needed
+    const url = 'http://localhost:4000/login';
+  
+    const dataJson =  {
+      "email": email,  
+      "password": password,
+    }
 
-    // Navigate to home page after successful login
-    navigate('/');
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    
+    axios.post(url, dataJson, config)
+      .then(response => {
+        console.log(response);
+        setResponse(response.dataJson);
+      })
+      .catch(error => {
+        console.error('Erro:', error);
+      });
+      
+      // Perform login logic here if needed
+      
+      // Navigate to home page after successful login
+      navigate('/');
   };
 
   return (
@@ -79,6 +102,7 @@ export default function LoginCard() {
             </Button>
           </Link>
         </Box>
+        <p>{sizeResponse}</p>
       </Paper>
     </Box>
   );

@@ -3,7 +3,12 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import { Link } from 'react-router-dom'; 
+import { Link, useNavigate } from 'react-router-dom'; 
+import axios from 'axios';
+import { useState } from 'react';
+
+const [setResponse, sizeResponse] = useState("");
+const navigate = useNavigate();
 
 export default function SignupCard() {
   const handleSubmit = (event) => {
@@ -12,13 +17,36 @@ export default function SignupCard() {
     const email = data.get('email');
     const password = data.get('password');
     const name = data.get('name');
-    const birthDate = data.get('birthDate');
-    console.log('Email:', email);
-    console.log('Password:', password);
-    console.log('Name:', name);
-    console.log('Birth Date:', birthDate);
     // Perform signup logic here if needed
+    const url = 'http://localhost:4000/usuario/create';
+  
+    const dataJson =  {
+      "username": name, 
+      "email": email,  
+      "accessName": 'Usuario',
+      "password": password,
+    }
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    
+    axios.post(url, dataJson, config)
+      .then(response => {
+        console.log('Resposta:', response.dataJson);
+        setResponse(response.dataJson);
+        navigate('/home');
+      })
+      .catch(error => {
+        console.error('Erro:', error);
+        setResponse(error);
+      });
+
   };
+
+  
 
   return (
     <Box
@@ -68,19 +96,6 @@ export default function SignupCard() {
             InputLabelProps={{ style: { color: 'white' } }}
             InputProps={{ style: { color: 'white' } }}
           />
-          <TextField
-            name="birthDate"
-            label="Data de Nascimento"
-            type="date"
-            variant="outlined"
-            fullWidth
-            margin="normal"
-            InputLabelProps={{
-              shrink: true,
-              style: { color: 'white' }
-            }}
-            InputProps={{ style: { color: 'white' } }}
-          />
           <Button
             type="submit"
             variant="contained"
@@ -110,6 +125,9 @@ export default function SignupCard() {
           </Link>
         </Box>
       </Paper>
+          <Box>
+              <p>{sizeResponse}</p>
+          </Box>
     </Box>
   );
 }
