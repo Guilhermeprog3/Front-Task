@@ -5,6 +5,7 @@ import Register from '../pages/Register';
 import Tarefas from '../pages/Tarefas';
 import usuario from '../pages/usuario';
 import criar from '../pages/criar';
+import Alterar from '../pages/alterar'
 export const RoutesPath = {
   '/': Home,
 '/tarefas': Tarefas,
@@ -13,4 +14,5 @@ export const RoutesPath = {
 '/registrar': Register,
 '/usuario': usuario,
 '/criar':criar,
+'/alterar':Alterar,
 };

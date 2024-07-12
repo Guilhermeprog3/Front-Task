@@ -3,9 +3,13 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import { Link } from 'react-router-dom'; 
+import { Link, useNavigate } from 'react-router-dom'; 
+import { useMessage } from '../contexts';
 
 export default function LoginCard() {
+  const navigate = useNavigate();
+  const { setMessage } = useMessage();
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -13,7 +17,9 @@ export default function LoginCard() {
     const password = data.get('password');
     console.log('Email:', email);
     console.log('Password:', password);
-  
+    
+    setMessage('Login realizado com sucesso!');
+    navigate('/');
   };
 
   return (

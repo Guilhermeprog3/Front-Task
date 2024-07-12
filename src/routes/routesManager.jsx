@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useMemo } from 'react';
 import { RoutesPath } from './routespath';
 import ResponsiveAppBar from '../componentes/navbar'
+import { MessageProvider } from '../componentes/contexts'
 export const RouterManager = () => {
   const routes = useMemo(
     () =>
@@ -18,9 +19,11 @@ export const RouterManager = () => {
     []
   );
   return (
+    <MessageProvider>
     <BrowserRouter>
     <ResponsiveAppBar />
       <Routes>{routes}</Routes>
     </BrowserRouter>
+    </MessageProvider>
   );
 };

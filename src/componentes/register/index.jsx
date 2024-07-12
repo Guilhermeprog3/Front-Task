@@ -4,17 +4,19 @@ import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
-export default function SimplePaper() {
+export default function SignupCard() {
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Lógica para lidar com o formulário
+    // Lógica para lidar com o formulário de registro
     const data = new FormData(event.currentTarget);
-    const taskName = data.get('taskName');
-    const endDate = data.get('endDate');
-    const description = data.get('description');
-    console.log('Task Name:', taskName);
-    console.log('End Date:', endDate);
-    console.log('Description:', description);
+    const firstName = data.get('firstName');
+    const lastName = data.get('lastName');
+    const email = data.get('email');
+    const password = data.get('password');
+    console.log('First Name:', firstName);
+    console.log('Last Name:', lastName);
+    console.log('Email:', email);
+    console.log('Password:', password);
   };
 
   return (
@@ -39,8 +41,8 @@ export default function SimplePaper() {
       >
         <form onSubmit={handleSubmit}>
           <TextField
-            name="taskName"
-            label="Nome da Tarefa"
+            name="firstName"
+            label="Nome"
             variant="outlined"
             fullWidth
             margin="normal"
@@ -48,31 +50,36 @@ export default function SimplePaper() {
             InputProps={{ style: { color: 'white' } }}
           />
           <TextField
-            name="endDate"
-            label="Data de Término"
-            type="date"
+            name="lastName"
+            label="Sobrenome"
             variant="outlined"
             fullWidth
             margin="normal"
-            InputLabelProps={{
-              shrink: true,
-              style: { color: 'white' }
-            }}
+            InputLabelProps={{ style: { color: 'white' } }}
             InputProps={{ style: { color: 'white' } }}
           />
           <TextField
-            name="description"
-            label="Descrição"
+            name="email"
+            label="Email"
+            type="email"
             variant="outlined"
             fullWidth
             margin="normal"
-            multiline
-            rows={4}
+            InputLabelProps={{ style: { color: 'white' } }}
+            InputProps={{ style: { color: 'white' } }}
+          />
+          <TextField
+            name="password"
+            label="Senha"
+            type="password"
+            variant="outlined"
+            fullWidth
+            margin="normal"
             InputLabelProps={{ style: { color: 'white' } }}
             InputProps={{ style: { color: 'white' } }}
           />
           <Button type="submit" variant="contained" color="primary" sx={{ width: '10rem', margin: '1rem auto', display: 'block' }}>
-            Cadastrar
+            Registrar
           </Button>
         </form>
       </Paper>
