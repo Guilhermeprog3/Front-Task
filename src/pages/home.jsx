@@ -4,6 +4,9 @@ import TaskCard from '../componentes/card';
 import FloatingActionButtons from '../componentes/click';
 import { AuthContext } from ".././context/authContext";
 import axios from 'axios';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
+import { useMessage } from '../componentes/contexts';
 
 function Home() {
   const { user } = useContext(AuthContext);
@@ -26,7 +29,11 @@ function Home() {
 
     fetchTasks();
   }, [user]); 
+  const { message, setMessage } = useMessage();
 
+  const handleCloseSnackbar = () => {
+    setMessage('');
+  };
 
 
   return (
@@ -42,6 +49,11 @@ function Home() {
         </Grid>
       </Grid>
       <p>{tasks}</p>
+      <Snackbar open={Boolean(message)} autoHideDuration={6000} onClose={handleCloseSnackbar}>
+        <Alert onClose={handleCloseSnackbar} severity="success" sx={{ width: '100%' }}>
+          {message}
+        </Alert>
+      </Snackbar>
     </div>
   );
 }

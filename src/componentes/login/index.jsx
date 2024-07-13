@@ -1,19 +1,18 @@
-import { useState, useEffect } from "react";
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import { Link } from "react-router-dom";
-import { useNavigate } from 'react-router-dom';
-import { AuthContext } from "../../context/authContext";
+import { Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
-
+import { AuthContext } from "../../context/authContext";
+import { useMessage } from "../contexts";
 
 export default function LoginCard() {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = React.useState(false);
   const { signIn, user } = useContext(AuthContext);
   const navigate = useNavigate();
+  const { setMessage } = useMessage();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -21,7 +20,6 @@ export default function LoginCard() {
     const data = new FormData(event.currentTarget);
     const email = data.get("email");
     const password = data.get("password");
-    
     const dataJson = {
       email: email,
       password: password,
@@ -36,11 +34,12 @@ export default function LoginCard() {
     }
   };
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (user) {
+      setMessage("Login realizado com sucesso!");
       navigate("/");
     }
-  }, [user, navigate]);
+  }, [user, navigate, setMessage]);
 
   return (
     <Box
@@ -87,9 +86,15 @@ export default function LoginCard() {
             variant="contained"
             color="primary"
             fullWidth
-            sx={{ mt: 2 }}
+            sx={{
+              mt: 2,
+              background: 'linear-gradient(135deg, #3f51b5 0%, #9c27b0 100%)',
+              '&:hover': {
+                background: 'linear-gradient(135deg, #9c27b0 0%, #3f51b5 100%)',
+              },
+            }}
           >
-            Login
+            {loading ? "Carregando..." : "Login"}
           </Button>
         </form>
         <Box sx={{ mt: 2 }}>

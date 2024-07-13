@@ -3,13 +3,13 @@ import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useNavigate } from 'react-router-dom';
+import { useMessage } from "../contexts"; // Importe seu contexto de mensagens aqui
 
 export default function SignupCard() {
   const navigate = useNavigate();
-
+  const { setMessage } = useMessage(); // Obtenha a função setMessage do contexto de mensagens
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -36,12 +36,13 @@ export default function SignupCard() {
     axios
       .post(url, dataJson, config)
       .then((response) => {
-        console.log("Resposta:", response.dataJson);
+        console.log("Resposta:", response.data);
+        setMessage("Conta criada com sucesso! Faça login para continuar.");
+        navigate("/login");
       })
       .catch((error) => {
         console.error("Erro:", error);
       });
-    navigate("/login");
   };
 
   return (
@@ -97,7 +98,13 @@ export default function SignupCard() {
             variant="contained"
             color="primary"
             fullWidth
-            sx={{ mt: 2 }}
+            sx={{
+              mt: 2,
+              background: 'linear-gradient(135deg, #3f51b5 0%, #9c27b0 100%)',
+              '&:hover': {
+                background: 'linear-gradient(135deg, #9c27b0 0%, #3f51b5 100%)',
+              },
+            }}
           >
             Criar Conta
           </Button>
