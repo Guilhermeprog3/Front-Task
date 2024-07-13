@@ -2,6 +2,7 @@
 
 Descrição do Projeto<br>
 
+Frontend criado com integração com o **[backend](https://github.com/Jhopn/task-api)** 
 ### 🛠️ Construído com:
 
 [![My Skills](https://skillicons.dev/icons?i=react,materialui,vite)](https://skillicons.dev)
@@ -21,14 +22,14 @@ Crie a aplicação ViteJS:<br>
 `npm create vite@latest`<br>
 
 Instale as Dependências:<br>
-`npm install<br>`
-`yarn install<br>`
+`npm install`<br>
+`yarn install`<br>
 
 Instale o react-router-dom(roteamento entre paginas(transição, conexão de páginas)):<br>
-`npm install react-router-dom<br>`
+`npm install react-router-dom`<br>
 
 Inicie o Servidor de Desenvolvimento:<br>
-`npm run dev<br>`
+`npm run dev`<br>
 
 #### OBS: Certifique-se de que o backend está rodando na URL especificada. <br>
 
