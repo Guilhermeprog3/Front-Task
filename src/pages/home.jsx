@@ -41,7 +41,7 @@ function Home() {
       <Grid container spacing={3}>
         {tasks.map((task) => (
           <Grid item key={task.id} xs={12} sm={6} md={4}>
-            <TaskCard title={task.title} description={task.description} dueDate={task.dueDate} status={task.status} />
+            <TaskCard id={task.id} title={task.title} description={task.description} dueDate={task.dueDate} status={task.status} />
           </Grid>
         ))}
         <Grid item xs={12} sm={6} md={4}>

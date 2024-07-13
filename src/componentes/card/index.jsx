@@ -7,18 +7,35 @@ import Button from '@mui/material/Button';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import InfoIcon from '@mui/icons-material/Info';
+import axios from 'axios';
+import { useMessage } from '../contexts';
 
-export default function TaskCard() {
+export default function TaskCard({id}) {
   const [completed, setCompleted] = React.useState(false);
   const [dueDate] = React.useState(new Date('2024-08-31'));
+  const { message, setMessage } = useMessage();
+  
 
   const handleCompleteClick = () => {
     console.log('Tarefa marcada como concluída');
     setCompleted(true);
   };
 
-  const handleDeleteClick = () => {
-    console.log('Tarefa excluída');
+  const handleDeleteClick = async () => {
+    const url = `http://localhost:4000/tarefa/${id}`;
+    const config = {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("@Auth:token")}`
+      },
+    };
+    try {
+      const response = await axios.delete(url, config);
+      console.log('Resposta da exclusão:', response.data);
+    } catch (error) {
+      console.error('Erro ao excluir a tarefa:', error);
+    }
+    setMessage('Tarefa excluída')
+    
   };
 
   const handleModifyClick = () => {
