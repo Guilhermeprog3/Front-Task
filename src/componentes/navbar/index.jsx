@@ -19,7 +19,7 @@ const pages = [
   { name: 'Pricing', path: '/pricing' }, // Atualize com a rota correta se existir
   { name: 'CREDITOS', path: '/creditos' } // Atualize com a rota correta se existir
 ];
-const settings = ['Logout','Login'];
+const settings = ['Logout','Login','Usuario'];
 
 function ResponsiveAppBar() {
   const navigate = useNavigate();
@@ -46,6 +46,9 @@ function ResponsiveAppBar() {
   };
   const handle =()=>{
     navigate('/criar');
+  }
+  const handle2 =()=>{
+    navigate('/usuario');
   }
 
   return (
@@ -174,6 +177,9 @@ function ResponsiveAppBar() {
                     }
                     else if (setting === 'Logout'){
                       handle();
+                    }
+                    else if (setting === 'Usuario'){
+                      handle2();
                     }
                   }}
                 >

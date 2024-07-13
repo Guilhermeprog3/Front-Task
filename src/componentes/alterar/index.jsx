@@ -4,11 +4,15 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import { useMessage } from '../contexts';
+import { useMessage } from '../contexts'; 
 
 export default function SimplePaper() {
   const navigate = useNavigate();
   const { setMessage } = useMessage();
+
+  const [taskName, setTaskName] = React.useState('ESTUDAR REACT');
+  const [endDate, setEndDate] = React.useState('2024-08-20');
+  const [description, setDescription] = React.useState('EU TENHO QUE ESTUDAR REACT ATÉ ESSA DATA LIMITE');
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -20,10 +24,11 @@ export default function SimplePaper() {
     console.log('End Date:', endDate);
     console.log('Description:', description);
 
-    // Definir a mensagem no contexto
-    setMessage('A tarefa foi cadastrada com sucesso!');
+    setMessage('A task foi alterada com sucesso!');
+    navigate('/');
+  };
 
-    // Navegar de volta para a página inicial
+  const handleCancel = () => {
     navigate('/');
   };
 
@@ -55,6 +60,8 @@ export default function SimplePaper() {
             margin="normal"
             InputLabelProps={{ style: { color: 'white' } }}
             InputProps={{ style: { color: 'white' } }}
+            value={taskName}
+            onChange={(e) => setTaskName(e.target.value)}
           />
           <TextField
             name="endDate"
@@ -65,9 +72,11 @@ export default function SimplePaper() {
             margin="normal"
             InputLabelProps={{
               shrink: true,
-              style: { color: 'white' },
+              style: { color: 'white' }
             }}
             InputProps={{ style: { color: 'white' } }}
+            value={endDate}
+            onChange={(e) => setEndDate(e.target.value)}
           />
           <TextField
             name="description"
@@ -79,19 +88,14 @@ export default function SimplePaper() {
             rows={4}
             InputLabelProps={{ style: { color: 'white' } }}
             InputProps={{ style: { color: 'white' } }}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
           />
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-            sx={{
-              width: '10rem',
-              margin: '1rem auto',
-              display: 'block',
-              background: 'linear-gradient(135deg, #3f51b5 0%, #9c27b0 100%)',
-            }}
-          >
-            Cadastrar
+          <Button type="submit" variant="contained" color="primary" sx={{ width: '10rem', margin: '1rem auto', display: 'block', background: 'linear-gradient(135deg, #3f51b5 0%, #9c27b0 100%)'}}>
+            Alterar
+          </Button>
+          <Button onClick={handleCancel} variant="contained" color="secondary" sx={{ width: '10rem', margin: '1rem auto', display: 'block', background: 'linear-gradient(135deg, #3f51b5 0%, #9c27b0 100%)'}}>
+            Cancelar
           </Button>
         </form>
       </Paper>
