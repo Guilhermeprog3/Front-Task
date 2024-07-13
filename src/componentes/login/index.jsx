@@ -4,7 +4,7 @@ import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { Link, useNavigate } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AuthContext } from "../../context/authContext";
 import { useMessage } from "../contexts";
 
@@ -34,7 +34,7 @@ export default function LoginCard() {
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (user) {
       setMessage("Login realizado com sucesso!");
       navigate("/");

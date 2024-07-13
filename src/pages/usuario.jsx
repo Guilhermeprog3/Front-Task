@@ -1,14 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import SizeAvatars from "../componentes/avatar/avatar";
 import BasicButtons from "../componentes/button/button";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import { AuthContext } from ".././context/authContext";
+import axios from 'axios';
 
 function Usuario() {
   const [showPassword, setShowPassword] = useState(false);
   const [editingImage, setEditingImage] = useState(false);
   const [newImageUrl, setNewImageUrl] = useState("");
-  const password = "teste123"; // Senha a ser exibida
+  const password = "teste123"; 
+  const { user } = useContext(AuthContext);
+  const [userDados, setUserDados] = useState([]);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -26,10 +30,48 @@ function Usuario() {
   };
 
   const saveNewImage = () => {
-    // Lógica para salvar a nova imagem (pode ser um axios.post para enviar o URL para o servidor)
     console.log("Nova imagem salva:", newImageUrl);
-    toggleImageEditing(); // Fechar o campo de input após salvar
+    
+    const dataJson = {
+      avatar: newImageUrl,
+    };
+
+    axios
+      .post(url, dataJson, config)
+      .then(async () => {
+        const response = await axios.get(`http://localhost:4000/usuario/${user}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("@Auth:token")}`
+          }
+        });
+      })
+      .catch((error) => {
+        console.error("Erro:", error);
+      });
+
+    toggleImageEditing(); 
   };
+
+    
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await axios.get(`http://localhost:4000/usuario/${user}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("@Auth:token")}`
+          }
+        });
+        console.log(response);
+        setUserDados(response.data); 
+      } catch (error) {
+        console.log(error)
+        console.error('Erro ao buscar usuario:', error);
+      }
+    };
+
+    fetchUser();
+  }, [user]); 
+
 
   return (
     <div
@@ -40,7 +82,7 @@ function Usuario() {
         display: "grid",
         justifyContent: "center",
         textAlign: "center",
-        position: "relative", // Adicionado para posicionamento absoluto do input
+        position: "relative", 
       }}
     >
       {/* Avatar como botão para alterar a imagem */}
@@ -88,9 +130,9 @@ function Usuario() {
       )}
 
       <div style={{ fontFamily: "sans-serif", fontSize: 15, color: "white", marginTop: "1rem" }}>
-        <p>Nome do Usuário</p>
-        <p>kjahdj@gmail.com</p>
-        <p>Senha: {showPassword ? password : "•••••••••"}</p>
+        <p>{userDados.name}</p>
+        <p>{userDados.email}</p>
+        <p>Senha: {showPassword ? password : `${userDados.password}`}</p>
         {showPassword ? (
           <VisibilityOffIcon
             onClick={togglePasswordVisibility}

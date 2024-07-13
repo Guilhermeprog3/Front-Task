@@ -41,6 +41,13 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const scheduleLogout = () => {
+    setTimeout(() => {
+      singOut(); 
+      return <Navigate to="/login" />;
+    }, 60 * 60 * 1000); 
+  };
+
   const singOut = () => {
     localStorage.clear();
     setUser(null);

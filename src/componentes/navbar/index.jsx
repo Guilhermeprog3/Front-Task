@@ -13,13 +13,13 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+// import { singOut } from '../../context/authContext;
 
 const pages = [
-  { name: 'TAREFAS', path: '/tarefas' },
-  { name: 'Pricing', path: '/pricing' }, // Atualize com a rota correta se existir
-  { name: 'CREDITOS', path: '/creditos' } // Atualize com a rota correta se existir
+  { name: 'CONTA', path: '/usuario' }
 ];
-const settings = ['Logout','Login','Usuario'];
+
+const settings = ['Cadastro','Login','Logout'];
 
 function ResponsiveAppBar() {
   const navigate = useNavigate();
@@ -41,15 +41,17 @@ function ResponsiveAppBar() {
     setAnchorElUser(null);
   };
 
-  const handleLogout = () => {
+  const handleLogin = () => {
     navigate('/login');
   };
-  const handle =()=>{
+  const handleCadastro =()=>{
     navigate('/criar');
   }
-  const handle2 =()=>{
-    navigate('/usuario');
+  const handleLogout =()=>{
+    singOut();
+    navigate('/login');
   }
+ 
 
   return (
     <AppBar position="static" sx={{ background: 'linear-gradient(135deg, #3f51b5 0%, #9c27b0 100%)' }}>
@@ -173,13 +175,16 @@ function ResponsiveAppBar() {
                   onClick={() => {
                     handleCloseUserMenu();
                     if (setting === 'Login') {
-                      handleLogout();
+                      handleLogin();
+                    }
+                    else if (setting === 'Cadastro'){
+                      handleCadastro();
                     }
                     else if (setting === 'Logout'){
-                      handle();
+                      handleLogout();
                     }
-                    else if (setting === 'Usuario'){
-                      handle2();
+                    else if (setting === 'Conta'){
+                      handleConta();
                     }
                   }}
                 >
