@@ -16,7 +16,7 @@ Clone o Repositório:<br>
 `git clone https://github.com/Guilhermeprog3/Front-Task.git`<br>
 
 Entre na pasta da aplicação:<br>
-`$ cd Front-Task<br>`
+`$ cd Front-Task`<br>
 
 Crie a aplicação ViteJS:<br>
 `npm create vite@latest`<br>
