@@ -13,18 +13,20 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import { useContext } from 'react';
+import { AuthContext } from '../../context/authContext';
 
 const pages = [
-  { name: 'TAREFAS', path: '/tarefas' },
-  { name: 'Pricing', path: '/pricing' }, // Atualize com a rota correta se existir
-  { name: 'CREDITOS', path: '/creditos' } // Atualize com a rota correta se existir
+  { name: 'CONTA', path: '/usuario' }
 ];
-const settings = ['Logout','Login','Usuario'];
 
-function ResponsiveAppBar() {
+const settings = ['Cadastro','Login','Logout'];
+
+function ResponsiveAppBar({avatar})  {
   const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const { signOut } = useContext(AuthContext);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -41,15 +43,17 @@ function ResponsiveAppBar() {
     setAnchorElUser(null);
   };
 
-  const handleLogout = () => {
+  const handleLogin = () => {
     navigate('/login');
   };
-  const handle =()=>{
+  const handleCadastro =()=>{
     navigate('/criar');
   }
-  const handle2 =()=>{
-    navigate('/usuario');
+  const handleLogout =()=>{
+    signOut();
+    navigate('/login');
   }
+ 
 
   return (
     <AppBar position="static" sx={{ background: 'linear-gradient(135deg, #3f51b5 0%, #9c27b0 100%)' }}>
@@ -148,7 +152,7 @@ function ResponsiveAppBar() {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar alt="User Avatar" src={avatar} />
               </IconButton>
             </Tooltip>
             <Menu
@@ -173,13 +177,16 @@ function ResponsiveAppBar() {
                   onClick={() => {
                     handleCloseUserMenu();
                     if (setting === 'Login') {
-                      handleLogout();
+                      handleLogin();
+                    }
+                    else if (setting === 'Cadastro'){
+                      handleCadastro();
                     }
                     else if (setting === 'Logout'){
-                      handle();
+                      handleLogout();
                     }
-                    else if (setting === 'Usuario'){
-                      handle2();
+                    else if (setting === 'Conta'){
+                      handleConta();
                     }
                   }}
                 >

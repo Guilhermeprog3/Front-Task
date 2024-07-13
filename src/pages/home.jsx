@@ -1,44 +1,61 @@
-import React from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import Grid from '@mui/material/Grid';
 import TaskCard from '../componentes/card';
 import FloatingActionButtons from '../componentes/click';
+import { AuthContext } from ".././context/authContext";
+import axios from 'axios';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
+import { useMessage } from '../componentes/contexts';
 
 function Home() {
-  const tasks = [
-    { id: 1, title: 'Tarefa 1' },
-    { id: 2, title: 'Tarefa 2' },
-    { id: 3, title: 'Tarefa 3' },
-    { id: 4, title: 'Tarefa 4' },
-    { id: 5, title: 'Tarefa 5' },
-    { id: 6, title: 'Tarefa 6' },
-    { id: 1, title: 'Tarefa 1' },
-    { id: 2, title: 'Tarefa 2' },
-    { id: 3, title: 'Tarefa 3' },
-    { id: 4, title: 'Tarefa 4' },
-    { id: 5, title: 'Tarefa 5' },
-    { id: 6, title: 'Tarefa 6' },
-    { id: 1, title: 'Tarefa 1' },
-    { id: 2, title: 'Tarefa 2' },
-    { id: 3, title: 'Tarefa 3' },
-    { id: 4, title: 'Tarefa 4' },
-    { id: 5, title: 'Tarefa 5' },
-    { id: 6, title: 'Tarefa 6' },
-  ];
+  const { user } = useContext(AuthContext);
+  const [tasks, setTasks] = useState([]);
+
+  useEffect(() => {
+    const fetchTasks = async () => {
+      try {
+        const response = await axios.get(`http://localhost:4000/tarefas/${user}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("@Auth:token")}`
+          }
+        });
+        setTasks(response.data); 
+        console.log(tasks);
+      } catch (error) {
+        console.error('Erro ao buscar tarefas:', error);
+      }
+    };
+
+    fetchTasks();
+  }, [user]); 
+  const { message, setMessage } = useMessage();
+
+  const handleCloseSnackbar = () => {
+    setMessage('');
+  };
+
 
   return (
     <div style={{ background: 'linear-gradient(135deg, #0D47A1 0%, #000000 100%)', minHeight: '100vh', padding: '2rem' }}>
-      <Grid container spacing={0}>
+      <Grid container spacing={3}>
         {tasks.map((task) => (
-          <Grid item key={task.id} xs={2} sm={2} md={7}>
-            <TaskCard title={task.title} />
+          <Grid item key={task.id} xs={12} sm={6} md={4}>
+            <TaskCard title={task.title} description={task.description} dueDate={task.dueDate} status={task.status} />
           </Grid>
         ))}
         <Grid item xs={12} sm={6} md={4}>
           <FloatingActionButtons />
         </Grid>
       </Grid>
+      <Snackbar open={Boolean(message)} autoHideDuration={6000} onClose={handleCloseSnackbar}>
+        <Alert onClose={handleCloseSnackbar} severity="error" sx={{ width: '100%' }}>
+          {message}
+        </Alert>
+      </Snackbar>
     </div>
   );
 }
 
 export default Home;
+
