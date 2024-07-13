@@ -1,27 +1,20 @@
 import React, { useState, useContext, useEffect } from "react";
 import SizeAvatars from "../componentes/avatar/avatar";
 import BasicButtons from "../componentes/button/button";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { AuthContext } from ".././context/authContext";
 import axios from 'axios';
 
 function Usuario() {
-  const [showPassword, setShowPassword] = useState(false);
   const [editingImage, setEditingImage] = useState(false);
   const [newImageUrl, setNewImageUrl] = useState("");
-  const password = "teste123"; 
   const { user } = useContext(AuthContext);
   const [userDados, setUserDados] = useState([]);
 
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
 
   const toggleImageEditing = () => {
     setEditingImage(!editingImage);
     if (!editingImage) {
-      setNewImageUrl(""); // Limpar o campo de input ao abrir
+      setNewImageUrl(""); 
     }
   };
 
@@ -29,25 +22,30 @@ function Usuario() {
     setNewImageUrl(event.target.value);
   };
 
-  const saveNewImage = () => {
+  const saveNewImage = async () => {
     console.log("Nova imagem salva:", newImageUrl);
     
     const dataJson = {
-      avatar: newImageUrl,
+      avatar: newImageUrl
     };
 
-    axios
-      .post(url, dataJson, config)
-      .then(async () => {
-        const response = await axios.get(`http://localhost:4000/usuario/${user}`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("@Auth:token")}`
-          }
-        });
-      })
-      .catch((error) => {
+      const url = `http://localhost:4000/usuario/${user}`;
+  
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("@Auth:token")}`
+        },
+      };
+  
+      try {
+        const response = await axios.put(url, dataJson, config);
+        console.log("Resposta:", response.data);
+        setUserDados(response.data); 
+      } catch (error) {
         console.error("Erro:", error);
-      });
+        console.error('Erro ao buscar avatar:', error);
+      }
 
     toggleImageEditing(); 
   };
@@ -87,7 +85,7 @@ function Usuario() {
     >
       {/* Avatar como botão para alterar a imagem */}
       <button onClick={toggleImageEditing} style={{ border: "none", background: "none", cursor: "pointer", position: "relative" }}>
-        <SizeAvatars />
+        <SizeAvatars avatar={userDados.avatar}/>
       </button>
 
       {/* Input para inserir o link da nova imagem */}
@@ -130,20 +128,8 @@ function Usuario() {
       )}
 
       <div style={{ fontFamily: "sans-serif", fontSize: 15, color: "white", marginTop: "1rem" }}>
-        <p>{userDados.name}</p>
+        <p>{userDados.username}</p>
         <p>{userDados.email}</p>
-        <p>Senha: {showPassword ? password : `${userDados.password}`}</p>
-        {showPassword ? (
-          <VisibilityOffIcon
-            onClick={togglePasswordVisibility}
-            style={{ cursor: "pointer", color: "white" }}
-          />
-        ) : (
-          <VisibilityIcon
-            onClick={togglePasswordVisibility}
-            style={{ cursor: "pointer", color: "white" }}
-          />
-        )}
         <BasicButtons />
       </div>
     </div>

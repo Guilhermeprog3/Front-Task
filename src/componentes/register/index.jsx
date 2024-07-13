@@ -5,26 +5,49 @@ import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useMessage } from '../contexts';
+import { useContext } from 'react';
+import { AuthContext } from '../../context/authContext';
+import axios from "axios";
+import { format } from 'date-fns';
 
 export default function SimplePaper() {
   const navigate = useNavigate();
   const { setMessage } = useMessage();
+  const { user } = useContext(AuthContext);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const taskName = data.get('taskName');
     const endDate = data.get('endDate');
     const description = data.get('description');
-    console.log('Task Name:', taskName);
-    console.log('End Date:', endDate);
-    console.log('Description:', description);
 
-    // Definir a mensagem no contexto
-    setMessage('A tarefa foi cadastrada com sucesso!');
+    const formattedDate = format(endDate, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
 
-    // Navegar de volta para a página inicial
-    navigate('/');
+    const dataJson = {
+      title: taskName,
+      description: description,
+      dueDate: formattedDate,
+      userId: user
+    };
+
+    const url = `http://localhost:4000/tarefa/create`;
+  
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("@Auth:token")}`
+        },
+      };
+      
+      try {
+      const response = await axios.post(url, dataJson, config);
+      console.log(response);
+      setMessage('A tarefa foi cadastrada com sucesso!');
+      navigate('/');
+    } catch (error) {
+      console.error('Erro ao criar tarefa:', error);
+    }
   };
 
   return (

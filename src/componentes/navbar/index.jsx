@@ -13,7 +13,8 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-// import { singOut } from '../../context/authContext;
+import { useContext } from 'react';
+import { AuthContext } from '../../context/authContext';
 
 const pages = [
   { name: 'CONTA', path: '/usuario' }
@@ -21,10 +22,11 @@ const pages = [
 
 const settings = ['Cadastro','Login','Logout'];
 
-function ResponsiveAppBar() {
+function ResponsiveAppBar({avatar})  {
   const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const { signOut } = useContext(AuthContext);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -48,7 +50,7 @@ function ResponsiveAppBar() {
     navigate('/criar');
   }
   const handleLogout =()=>{
-    singOut();
+    signOut();
     navigate('/login');
   }
  
@@ -150,7 +152,7 @@ function ResponsiveAppBar() {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar alt="User Avatar" src={avatar} />
               </IconButton>
             </Tooltip>
             <Menu

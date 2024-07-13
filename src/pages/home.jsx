@@ -21,7 +21,7 @@ function Home() {
           }
         });
         setTasks(response.data); 
-        console.log(response);
+        console.log(tasks);
       } catch (error) {
         console.error('Erro ao buscar tarefas:', error);
       }
@@ -41,16 +41,15 @@ function Home() {
       <Grid container spacing={3}>
         {tasks.map((task) => (
           <Grid item key={task.id} xs={12} sm={6} md={4}>
-            <TaskCard title={task.title} />
+            <TaskCard title={task.title} description={task.description} dueDate={task.dueDate} status={task.status} />
           </Grid>
         ))}
         <Grid item xs={12} sm={6} md={4}>
           <FloatingActionButtons />
         </Grid>
       </Grid>
-      <p>{tasks}</p>
       <Snackbar open={Boolean(message)} autoHideDuration={6000} onClose={handleCloseSnackbar}>
-        <Alert onClose={handleCloseSnackbar} severity="success" sx={{ width: '100%' }}>
+        <Alert onClose={handleCloseSnackbar} severity="error" sx={{ width: '100%' }}>
           {message}
         </Alert>
       </Snackbar>
