@@ -5,11 +5,11 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useMessage } from "../contexts"; // Importe seu contexto de mensagens aqui
+import { useMessage } from "../contexts";
 
 export default function SignupCard() {
   const navigate = useNavigate();
-  const { setMessage } = useMessage(); // Obtenha a função setMessage do contexto de mensagens
+  const { setMessage } = useMessage();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -18,7 +18,7 @@ export default function SignupCard() {
     const password = data.get("password");
     const name = data.get("name");
 
-    const url = "http://localhost:4000/usuario/create";
+    const url = "https://deploy-task-api.onrender.com/usuario/create";
 
     const dataJson = {
       username: name,

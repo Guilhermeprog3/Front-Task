@@ -29,7 +29,7 @@ function Usuario() {
       avatar: newImageUrl
     };
 
-      const url = `http://localhost:4000/usuario/${user}`;
+      const url = `https://deploy-task-api.onrender.com/usuario/${user}`;
   
       const config = {
         headers: {
@@ -54,7 +54,7 @@ function Usuario() {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await axios.get(`http://localhost:4000/usuario/${user}`, {
+        const response = await axios.get(`https://deploy-task-api.onrender.com/usuario/${user}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("@Auth:token")}`
           }
@@ -83,12 +83,10 @@ function Usuario() {
         position: "relative", 
       }}
     >
-      {/* Avatar como botão para alterar a imagem */}
       <button onClick={toggleImageEditing} style={{ border: "none", background: "none", cursor: "pointer", position: "relative" }}>
         <SizeAvatars avatar={userDados.avatar}/>
       </button>
 
-      {/* Input para inserir o link da nova imagem */}
       {editingImage && (
         <div
           style={{
@@ -97,12 +95,12 @@ function Usuario() {
             left: "50%",
             transform: "translate(-50%, -50%)",
             padding: "1rem",
-            borderRadius: "20px", // Arredondamento maior
+            borderRadius: "20px",
             boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
-            zIndex: 1000, // Garante que o input esteja sobre o avatar
-            minWidth: "200px", // Ajuste conforme necessário
-            maxWidth: "80%", // Ajuste conforme necessário
-            background: 'linear-gradient(135deg, #3f51b5 0%, #9c27b0 100%)', // Gradiente entre azul e roxo
+            zIndex: 1000,
+            minWidth: "200px",
+            maxWidth: "80%",
+            background: 'linear-gradient(135deg, #3f51b5 0%, #9c27b0 100%)',
           }}
         >
           <input
@@ -114,11 +112,11 @@ function Usuario() {
               padding: "0.5rem",
               width: "100%",
               fontSize: "14px",
-              border: "none", // Removida a borda para um visual mais limpo
-              borderRadius: "20px", // Arredondamento maior
-              color: "white", // Cor do texto
-              background: "transparent", // Fundo transparente
-              outline: "none", // Removido o contorno ao focar
+              border: "none",
+              borderRadius: "20px",
+              color: "white",
+              background: "transparent",
+              outline: "none",
             }}
           />
           <button onClick={saveNewImage} style={{ marginTop: "0.5rem", padding: "0.5rem", fontSize: "14px", cursor: "pointer", color: "white", background: "rgba(255, 255, 255, 0.5)", border: "none", borderRadius: "20px" }}>

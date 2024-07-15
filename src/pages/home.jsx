@@ -15,7 +15,7 @@ function Home() {
   useEffect(() => {
     const fetchTasks = async () => {
       try {
-        const response = await axios.get(`http://localhost:4000/tarefas/${user}`, {
+        const response = await axios.get(`https://deploy-task-api.onrender.com/tarefas/${user}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("@Auth:token")}`
           }

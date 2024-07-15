@@ -20,7 +20,7 @@ const pages = [
   { name: 'CONTA', path: '/usuario' }
 ];
 
-const settings = ['Cadastro','Login','Logout'];
+const settings = ['Cadastro','Login'];
 
 function ResponsiveAppBar({avatar})  {
   const navigate = useNavigate();
