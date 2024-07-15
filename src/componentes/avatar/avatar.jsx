@@ -7,7 +7,7 @@ export default function SizeAvatars({avatar}) {
      <Stack direction="row" spacing={2}>
       <Avatar
         src={avatar}
-        sx={{ width: 346, height: 346 }}
+        sx={{ width: 286, height: 286 }}
       />
     </Stack>
   );

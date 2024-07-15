@@ -125,10 +125,12 @@ function Usuario() {
         </div>
       )}
 
-      <div style={{ fontFamily: "sans-serif", fontSize: 15, color: "white", marginTop: "1rem" }}>
-        <p>{userDados.username}</p>
-        <p>{userDados.email}</p>
-        <BasicButtons />
+      <div style={{ display: 'grid', justifyContent: 'center', fontFamily: "sans-serif", fontSize: 15, color: "white" }}>
+        <div>
+          <p>{userDados.username}</p>
+          <p>{userDados.email}</p>
+          <BasicButtons />
+        </div>
       </div>
     </div>
   );

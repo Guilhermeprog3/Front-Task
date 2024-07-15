@@ -1,35 +1,83 @@
 import * as React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import { useMessage } from '../contexts'; 
+import { useMessage } from '../contexts';
+import { AuthContext } from '../../context/authContext';
+import axios from "axios";
+import { format } from 'date-fns';
 
 export default function SimplePaper() {
   const navigate = useNavigate();
   const { setMessage } = useMessage();
+  const location = useLocation();
+  const { user } = React.useContext(AuthContext);
+  const { id, title, descriptions, dueDates } = location.state || {};
 
-  const [taskName, setTaskName] = React.useState('ESTUDAR REACT');
-  const [endDate, setEndDate] = React.useState('2024-08-20');
-  const [description, setDescription] = React.useState('EU TENHO QUE ESTUDAR REACT ATÉ ESSA DATA LIMITE');
+  const [taskName, setTaskName] = React.useState('');
+  const [endDate, setEndDate] = React.useState('');
+  const [description, setDescription] = React.useState('');
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const taskName = data.get('taskName');
-    const endDate = data.get('endDate');
-    const description = data.get('description');
-    console.log('Task Name:', taskName);
-    console.log('End Date:', endDate);
-    console.log('Description:', description);
+  React.useEffect(() => {
+    if (location.state) {
+      setTaskName(title || '');
+      const formattedDate = format(new Date(dueDates), 'yyyy-MM-dd'); 
+      setEndDate(formattedDate || '');
+      setDescription(descriptions || '');
+    }
+  }, [location.state, title, dueDates, descriptions]);
 
-    setMessage('A task foi alterada com sucesso!');
-    navigate('/');
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    switch (name) {
+      case 'taskName':
+        setTaskName(value);
+        break;
+      case 'endDate':
+        setEndDate(value);
+        break;
+      case 'description':
+        setDescription(value);
+        break;
+      default:
+        break;
+    }
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault(); 
+    const formattedDate = format(endDate, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
+
+    const dataJson = {
+      title: taskName,
+      dueDate: formattedDate,
+      description: description,
+      userId: user
+    };
+
+    const url = `https://deploy-task-api.onrender.com/tarefa/${id}`;
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("@Auth:token")}`
+      },
+    };
+
+    try {
+      const response = await axios.put(url, dataJson, config);
+      setMessage('Tarefa atualizada com sucesso!');
+      navigate('/');
+    } catch (error) {
+      console.error('Erro ao atualizar a tarefa:', error);
+      setMessage('Erro ao atualizar a tarefa');
+    }
   };
 
   const handleCancel = () => {
-    navigate('/');
+    navigate('/'); 
   };
 
   return (
@@ -61,9 +109,9 @@ export default function SimplePaper() {
             InputLabelProps={{ style: { color: 'white' } }}
             InputProps={{ 
               style: { color: 'white' },
-              readOnly: true 
             }}
             value={taskName}
+            onChange={handleChange}
           />
           <TextField
             name="endDate"
@@ -78,9 +126,9 @@ export default function SimplePaper() {
             }}
             InputProps={{ 
               style: { color: 'white' },
-              readOnly: true 
             }}
             value={endDate}
+            onChange={handleChange}
           />
           <TextField
             name="description"
@@ -93,10 +141,13 @@ export default function SimplePaper() {
             InputLabelProps={{ style: { color: 'white' } }}
             InputProps={{ 
               style: { color: 'white' },
-              readOnly: true 
             }}
             value={description}
+            onChange={handleChange}
           />
+          <Button type="submit" variant="contained" color="secondary" sx={{ width: '10rem', margin: '1rem auto', display: 'block', background: 'linear-gradient(135deg, #3f51b5 0%, #9c27b0 100%)'}}>
+            Salvar Alteração
+          </Button>
           <Button onClick={handleCancel} variant="contained" color="secondary" sx={{ width: '10rem', margin: '1rem auto', display: 'block', background: 'linear-gradient(135deg, #3f51b5 0%, #9c27b0 100%)'}}>
             Voltar
           </Button>

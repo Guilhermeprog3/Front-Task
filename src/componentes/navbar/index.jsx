@@ -20,7 +20,7 @@ const pages = [
   { name: 'CONTA', path: '/usuario' }
 ];
 
-const settings = ['Cadastro','Login','Logout'];
+const settings = ['Cadastro','Login','Sair'];
 
 function ResponsiveAppBar({avatar})  {
   const navigate = useNavigate();
@@ -49,7 +49,7 @@ function ResponsiveAppBar({avatar})  {
   const handleCadastro =()=>{
     navigate('/criar');
   }
-  const handleLogout =()=>{
+  const handleSair =()=>{
     signOut();
     navigate('/login');
   }
@@ -75,7 +75,7 @@ function ResponsiveAppBar({avatar})  {
               textDecoration: 'none',
             }}
           >
-            LOGO
+            TaskApp
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -182,8 +182,8 @@ function ResponsiveAppBar({avatar})  {
                     else if (setting === 'Cadastro'){
                       handleCadastro();
                     }
-                    else if (setting === 'Logout'){
-                      handleLogout();
+                    else if (setting === 'Sair'){
+                      handleSair();
                     }
                     else if (setting === 'Conta'){
                       handleConta();

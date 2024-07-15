@@ -1,0 +1,27 @@
+[33me816ec9[m[33m ([m[1;36mHEAD -> [m[1;32mgui-mudancas[m[33m, [m[1;31morigin/gui-mudancas[m[33m)[m HEAD@{0}: pull origin gui-mudancas: Fast-forward
+[33m23589eb[m HEAD@{1}: checkout: moving from main to gui-mudancas
+[33m3ba9ca1[m[33m ([m[1;31morigin/main[m[33m, [m[1;32mmain[m[33m)[m HEAD@{2}: pull origin main: Fast-forward
+[33m8d3df08[m HEAD@{3}: pull: Merge made by the 'ort' strategy.
+[33m72f8cb7[m HEAD@{4}: commit (merge): Merge com a branch gui-mudancas
+[33m515066e[m HEAD@{5}: checkout: moving from gui-mudancas to main
+[33m23589eb[m HEAD@{6}: commit: Integração com o backend nas páginas de login, usuario, registro e na navbar
+[33m4eb4f03[m HEAD@{7}: commit: Alterações na navbar e no SingOut
+[33mce313d1[m HEAD@{8}: pull origin gui-mudancas: Merge made by the 'ort' strategy.
+[33m037d136[m HEAD@{9}: commit: tsconfig alterado
+[33mf5bc847[m HEAD@{10}: checkout: moving from gui-mudancas to gui-mudancas
+[33mf5bc847[m HEAD@{11}: commit (merge): Merge mudanças
+[33mac0ad71[m HEAD@{12}: commit: Interação Login e Home
+[33m1ca16e7[m HEAD@{13}: pull origin gui-mudancas: Fast-forward
+[33m9e4810c[m HEAD@{14}: checkout: moving from main to gui-mudancas
+[33m515066e[m HEAD@{15}: pull: Fast-forward
+[33mba7f64f[m HEAD@{16}: commit: feat: Inicio da integração com o Backend
+[33mcb00ddd[m HEAD@{17}: pull: Fast-forward
+[33m296e765[m HEAD@{18}: commit: adicionado Icon e mudança do nome do site
+[33mbd597c0[m HEAD@{19}: commit: merge com Branch gui-mudancas
+[33m9e4810c[m HEAD@{20}: merge origin/gui-mudancas: Fast-forward
+[33m48167b7[m HEAD@{21}: checkout: moving from gui-mudancas to main
+[33m9e4810c[m HEAD@{22}: commit: feat: Mudanças de style e criação das demais páginas
+[33m48167b7[m HEAD@{23}: checkout: moving from main to gui-mudancas
+[33m48167b7[m HEAD@{24}: commit: feat: Criação da página de usuario
+[33mbf065f1[m HEAD@{25}: pull: Fast-forward
+[33mdccf2ae[m HEAD@{26}: commit (initial): feat: Criação das Rotas e estilização inicial

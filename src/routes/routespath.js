@@ -4,7 +4,6 @@ import Login from '../pages/Login';
 import Register from '../pages/Register';
 import usuario from '../pages/usuario';
 import criar from '../pages/criar';
-import Alterar from '../pages/alterar';
 import Detalhes from '../pages/detalhes'
 import Email from '../pages/alterar-email';
 export const RoutesPath = {
@@ -15,7 +14,6 @@ export const RoutesPath = {
 '/registrar': Register,
 '/usuario': usuario,
 '/criar':criar,
-'/alterar':Alterar,
 '/detalhes':Detalhes,
 '/email':Email
 };

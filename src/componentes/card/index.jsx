@@ -4,22 +4,35 @@ import CardContent from '@mui/material/CardContent';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import InfoIcon from '@mui/icons-material/Info';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useMessage } from '../contexts';
+import { format, parseISO, isBefore } from 'date-fns';
 
-export default function TaskCard({id}) {
-  const [completed, setCompleted] = React.useState(false);
-  const [dueDate] = React.useState(new Date('2024-08-31'));
+
+export default function TaskCard({id, title, descriptions, dueDates, status}) {
+  const [completed, setCompleted] = React.useState(status);
   const { message, setMessage } = useMessage();
   const navigate = useNavigate(); 
 
-  const handleCompleteClick = () => {
-    console.log('Tarefa marcada como concluída');
-    setCompleted(true);
+  const handleCompleteClick = async () => {
+    const url = `https://deploy-task-api.onrender.com/tarefa/status/${id}`;
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("@Auth:token")}`
+      },
+    };
+    try {
+      const response = await axios.put(url, config);
+      setCompleted(response.data.status);
+      setMessage('Tarefa marcada como concluída');
+    } catch (error) {
+      console.error('Erro ao atualizar a tarefa:', error);
+    }
+
   };
 
   const handleDeleteClick = async () => {
@@ -38,16 +51,8 @@ export default function TaskCard({id}) {
     setMessage('Tarefa excluída');
   };
 
-  const handleModifyClick = () => {
-    console.log('Modificar tarefa');
-  };
-
   const handleMoreInfoClick = () => {
-    navigate(`/detalhes/${id}`);
-  };
-
-  const isTaskOverdue = () => {
-    return !completed && dueDate < new Date();
+    navigate(`/detalhes`, { state: { id: id, title: title, descriptions: descriptions, dueDates: dueDates } });
   };
 
   const iconStyle = {
@@ -60,26 +65,23 @@ export default function TaskCard({id}) {
     <Card style={{ width: '100%', maxWidth: 800, margin: '2rem auto', background: 'linear-gradient(135deg, #3f51b5 0%, #9c27b0 100%)', color: 'white', marginLeft: '1em', marginTop: '-0.6rem' }}>
       <CardContent style={{ display: 'flex', alignItems: 'center' }}>
         <Typography variant="body1" component="div" sx={{ flexGrow: 1 }}>
-          Tarefa
+          {title}
         </Typography>
         <Button
           variant="outlined"
           onClick={handleCompleteClick}
           sx={{
-            background: isTaskOverdue()
+            background: 'COMPLETA'
               ? 'red'
-              : completed
+              : completed === 'COMPLETA'
               ? 'linear-gradient(135deg, #4caf50 0%, #2196f3 100%)'
               : 'linear-gradient(135deg, #3f51b5 0%, #9c27b0 100%)',
             color: 'white',
             marginLeft: 'auto',
           }}
         >
-          {completed ? 'Finalizada' : isTaskOverdue() ? 'Expirada' : 'Finalizar'}
+          {completed === 'COMPLETA' ? 'Completa' : 'Incompleta' }
         </Button>
-        <IconButton aria-label="modify" onClick={handleModifyClick}>
-          <EditIcon style={iconStyle} />
-        </IconButton>
         <IconButton aria-label="delete" onClick={handleDeleteClick}>
           <DeleteIcon style={iconStyle} />
         </IconButton>

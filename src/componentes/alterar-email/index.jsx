@@ -6,27 +6,36 @@ import Button from "@mui/material/Button";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useMessage } from "../contexts";
+import { useContext } from 'react';
+import { AuthContext } from "../../context/authContext";
 
 export default function UpdateAccountCard() {
   const navigate = useNavigate();
   const { setMessage } = useMessage();
-  const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const [name, setName] = React.useState('');
+  const { user } = useContext(AuthContext);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = { email, password,};
+
+    const dataJson = { 
+      username: name,
+      password: password,
+      avatar: null
+    };
     
+      const url = `https://deploy-task-api.onrender.com/usuario/${user}`;
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("@Auth:token")}`
+        },
+      };
+
     try {
-      const response = await axios.put(
-        'https://deploy-task-api.onrender.com',
-        data,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("@Auth:token")}`
-          },
-        }
-      );
+      const response = await axios.put(url, dataJson, config);
       setMessage('Conta atualizada com sucesso!');
       navigate('/usuario');
     } catch (error) {
@@ -56,17 +65,6 @@ export default function UpdateAccountCard() {
       >
         <form onSubmit={handleSubmit}>
           <TextField
-            name="email"
-            label="Novo Email"
-            variant="outlined"
-            fullWidth
-            margin="normal"
-            InputLabelProps={{ style: { color: "white" } }}
-            InputProps={{ style: { color: "white" } }}
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <TextField
             name="password"
             label="Nova Senha"
             type="password"
@@ -77,6 +75,17 @@ export default function UpdateAccountCard() {
             InputProps={{ style: { color: "white" } }}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+          />
+          <TextField
+            name="name"
+            label="Nome"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            InputLabelProps={{ style: { color: "white" } }}
+            InputProps={{ style: { color: "white" } }}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
           />
           <Button
             type="submit"
