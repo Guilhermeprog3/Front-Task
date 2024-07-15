@@ -8,18 +8,23 @@ export default function BasicButtons() {
       <Button
         variant="contained"
         style={{
-          background: "linear-gradient(135deg, #4caf50 0%, #2196f3 100%)",
           background: "linear-gradient(135deg, #3f51b5 0%, #9c27b0 100%)",
+          color: "white",
           marginLeft: "auto",
         }}
       >
         Atualizar Dados
       </Button>
 
-      <Button variant="contained" style={{ background: "red" }}>
+      <Button
+        variant="contained"
+        style={{
+          background: "linear-gradient(135deg, #ff5722 0%, #ff9800 100%)",
+          color: "white",
+        }}
+      >
         Excluir Conta
       </Button>
     </Stack>
   );
 }
-

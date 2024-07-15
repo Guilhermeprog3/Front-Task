@@ -7,18 +7,35 @@ import Button from '@mui/material/Button';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import InfoIcon from '@mui/icons-material/Info';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { useMessage } from '../contexts';
 
-export default function TaskCard() {
+export default function TaskCard({id}) {
   const [completed, setCompleted] = React.useState(false);
   const [dueDate] = React.useState(new Date('2024-08-31'));
+  const { message, setMessage } = useMessage();
+  const navigate = useNavigate(); 
 
   const handleCompleteClick = () => {
     console.log('Tarefa marcada como concluída');
     setCompleted(true);
   };
 
-  const handleDeleteClick = () => {
-    console.log('Tarefa excluída');
+  const handleDeleteClick = async () => {
+    const url = `https://deploy-task-api.onrender.com/tarefa/${id}`;
+    const config = {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("@Auth:token")}`
+      },
+    };
+    try {
+      const response = await axios.delete(url, config);
+      console.log('Resposta da exclusão:', response.data);
+    } catch (error) {
+      console.error('Erro ao excluir a tarefa:', error);
+    }
+    setMessage('Tarefa excluída');
   };
 
   const handleModifyClick = () => {
@@ -26,7 +43,7 @@ export default function TaskCard() {
   };
 
   const handleMoreInfoClick = () => {
-    console.log('Mais informações sobre a tarefa');
+    navigate(`/detalhes/${id}`);
   };
 
   const isTaskOverdue = () => {

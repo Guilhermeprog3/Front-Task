@@ -3,21 +3,23 @@ import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useContext, useEffect } from "react";
 import { AuthContext } from "../../context/authContext";
-import { useContext } from "react";
+import { useMessage } from "../contexts";
 
 export default function LoginCard() {
+  const [loading, setLoading] = React.useState(false);
   const { signIn, user } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const { setMessage } = useMessage();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true);
     const data = new FormData(event.currentTarget);
     const email = data.get("email");
     const password = data.get("password");
-
-    const url = "http://localhost:4000/login";
-
     const dataJson = {
       email: email,
       password: password,
@@ -28,32 +30,16 @@ export default function LoginCard() {
     } catch (error) {
       console.error("Erro ao fazer login:", error);
     } finally {
-      //setLoading(false);
-
+      setLoading(false);
     }
-
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-
-    /*React.useEffect(() => {
-      if (user) {
-        navigate("/");
-      }
-    }, [user, navigate]);
-    */
-
-    axios
-      .post(url, dataJson, config)
-      .then((response) => {
-        console.log("Resposta:", response.dataJson);
-      })
-      .catch((error) => {
-        console.error("Erro:", error);
-      });
   };
+
+  useEffect(() => {
+    if (user) {
+      setMessage("Login realizado com sucesso!");
+      navigate("/");
+    }
+  }, [user, navigate, setMessage]);
 
   return (
     <Box
@@ -100,9 +86,15 @@ export default function LoginCard() {
             variant="contained"
             color="primary"
             fullWidth
-            sx={{ mt: 2, background: 'linear-gradient(135deg, #3f51b5 0%, #9c27b0 100%)' }}
+            sx={{
+              mt: 2,
+              background: 'linear-gradient(135deg, #3f51b5 0%, #9c27b0 100%)',
+              '&:hover': {
+                background: 'linear-gradient(135deg, #9c27b0 0%, #3f51b5 100%)',
+              },
+            }}
           >
-            Login
+            {loading ? "Carregando..." : "Login"}
           </Button>
         </form>
         <Box sx={{ mt: 2 }}>
@@ -116,7 +108,6 @@ export default function LoginCard() {
             </Button>
           </Link>
         </Box>
-        <p>{sizeResponse}</p>
       </Paper>
     </Box>
   );

@@ -1,13 +1,16 @@
-
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useMessage } from "../contexts";
 
 export default function SignupCard() {
+  const navigate = useNavigate();
+  const { setMessage } = useMessage();
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -15,11 +18,7 @@ export default function SignupCard() {
     const password = data.get("password");
     const name = data.get("name");
 
-    console.log("Email:", email);
-    console.log("Password:", password);
-    console.log("Name:", name);
-
-    const url = "http://localhost:4000/usuario/create";
+    const url = "https://deploy-task-api.onrender.com/usuario/create";
 
     const dataJson = {
       username: name,
@@ -37,16 +36,14 @@ export default function SignupCard() {
     axios
       .post(url, dataJson, config)
       .then((response) => {
-        console.log("Resposta:", response.dataJson);
+        console.log("Resposta:", response.data);
+        setMessage("Conta criada com sucesso! Faça login para continuar.");
+        navigate("/login");
       })
       .catch((error) => {
         console.error("Erro:", error);
       });
-    navigate("/home");
-
   };
-
-  
 
   return (
     <Box
@@ -95,14 +92,19 @@ export default function SignupCard() {
             margin="normal"
             InputLabelProps={{ style: { color: "white" } }}
             InputProps={{ style: { color: "white" } }}
-
           />
           <Button
             type="submit"
             variant="contained"
             color="primary"
             fullWidth
-            sx={{ mt: 2, background: 'linear-gradient(135deg, #3f51b5 0%, #9c27b0 100%)' }}
+            sx={{
+              mt: 2,
+              background: 'linear-gradient(135deg, #3f51b5 0%, #9c27b0 100%)',
+              '&:hover': {
+                background: 'linear-gradient(135deg, #9c27b0 0%, #3f51b5 100%)',
+              },
+            }}
           >
             Criar Conta
           </Button>
@@ -113,16 +115,12 @@ export default function SignupCard() {
               variant="outlined"
               fullWidth
               sx={{ color: "white", borderColor: "white" }}
-
             >
               Voltar para Login
             </Button>
           </Link>
         </Box>
       </Paper>
-          <Box>
-              <p>{sizeResponse}</p>
-          </Box>
     </Box>
   );
 }

@@ -1,6 +1,6 @@
-import { createContext, useState, useEffect } from "react";
-import { Navigate } from "react-router-dom";
-import { axiosClient } from "../service/api";
+import React, { createContext, useState, useEffect } from 'react';
+import { Navigate } from 'react-router-dom';
+import { axiosClient } from '../service/api';
 
 export const AuthContext = createContext();
 
@@ -9,11 +9,12 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const loadingStoreData = () => {
-      const storageUser = localStorage.getItem("@Auth:user");
-      const storageToken = localStorage.getItem("@Auth:token");
+      const storageUser = localStorage.getItem('@Auth:user');
+      const storageToken = localStorage.getItem('@Auth:token');
 
       if (storageUser && storageToken) {
-        setUser(storageUser);
+        setUser(JSON.parse(storageUser));
+        axiosClient.defaults.headers.common['Authorization'] = `Bearer ${storageToken}`;
       }
     };
     loadingStoreData();
@@ -21,30 +22,34 @@ export const AuthProvider = ({ children }) => {
 
   const signIn = async ({ email, password }) => {
     try {
-      const response = await axiosClient.post("/login", { email, password });
+      const response = await axiosClient.post('/login', { email, password });
       if (response.data.error) {
         alert(response.data.error);
       } else {
-        setUser(response.data);
-        axiosClient.defaults.headers.common[
-          "Authorization"
-        ] = `Bearer ${response.data.accessToken}`;
+        setUser(response.data.userId);
+        axiosClient.defaults.headers.common['Authorization'] = `Bearer ${response.data.accessToken}`;
 
-        localStorage.setItem(
-          "@Auth:user",
-          JSON.stringify(response.data.userId)
-        );
-        localStorage.setItem("@Auth:token", response.data.accessToken);
+        localStorage.setItem('@Auth:user', JSON.stringify(response.data.userId));
+        localStorage.setItem('@Auth:token', response.data.accessToken);
+        scheduleLogout(); 
       }
     } catch (error) {
       console.error(error);
     }
   };
 
-  const singOut = () => {
-    localStorage.clear();
+  const scheduleLogout = () => {
+    setTimeout(() => {
+      signOut();
+      return <Navigate to="/login" />;
+    }, 60 * 60 * 1000); 
+  };
+
+  const signOut = () => {
+    localStorage.removeItem('@Auth:user');
+    localStorage.removeItem('@Auth:token');
     setUser(null);
-    return <Navigate to="/" />;
+    return <Navigate to="/login" />;
   };
 
   return (
@@ -52,7 +57,7 @@ export const AuthProvider = ({ children }) => {
       value={{
         user,
         signIn,
-        singOut,
+        signOut, 
       }}
     >
       {children}
