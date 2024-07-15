@@ -12,11 +12,10 @@ export default function UpdateAccountCard() {
   const { setMessage } = useMessage();
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
-  const [name, setName] = React.useState('');
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = { email, password, name };
+    const data = { email, password,};
     
     try {
       const response = await axios.put(
@@ -78,17 +77,6 @@ export default function UpdateAccountCard() {
             InputProps={{ style: { color: "white" } }}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-          />
-          <TextField
-            name="name"
-            label="Nome"
-            variant="outlined"
-            fullWidth
-            margin="normal"
-            InputLabelProps={{ style: { color: "white" } }}
-            InputProps={{ style: { color: "white" } }}
-            value={name}
-            onChange={(e) => setName(e.target.value)}
           />
           <Button
             type="submit"
