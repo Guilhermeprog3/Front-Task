@@ -6,6 +6,7 @@ import usuario from '../pages/usuario';
 import criar from '../pages/criar';
 import Alterar from '../pages/alterar';
 import Detalhes from '../pages/detalhes'
+import Email from '../pages/alterar-email';
 export const RoutesPath = {
 
   '/': Home,
@@ -16,4 +17,5 @@ export const RoutesPath = {
 '/criar':criar,
 '/alterar':Alterar,
 '/detalhes':Detalhes,
+'/email':Email
 };
