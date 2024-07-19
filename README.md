@@ -3,6 +3,9 @@
 Descrição do Projeto<br>
 
 Frontend criado com integração com o **[backend](https://github.com/Jhopn/task-api)** 
+
+O **[Frontend](http://front-task-spi.vercel.app/)** está no ar ✈
+
 ### 🛠️ Construído com:
 
 [![My Skills](https://skillicons.dev/icons?i=react,materialui,vite)](https://skillicons.dev)
