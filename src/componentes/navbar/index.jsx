@@ -12,17 +12,17 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
 import { useContext } from 'react';
 import { AuthContext } from '../../context/authContext';
+import taskAppIcon from './Task-App2.png';
 
 const pages = [
   { name: 'CONTA', path: '/usuario' }
 ];
 
-const settings = ['Cadastro','Login','Sair'];
+const settings = ['Cadastro', 'Login', 'Sair'];
 
-function ResponsiveAppBar({avatar})  {
+function ResponsiveAppBar({ avatar }) {
   const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -31,6 +31,7 @@ function ResponsiveAppBar({avatar})  {
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
+
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -46,38 +47,42 @@ function ResponsiveAppBar({avatar})  {
   const handleLogin = () => {
     navigate('/login');
   };
-  const handleCadastro =()=>{
+
+  const handleCadastro = () => {
     navigate('/criar');
-  }
-  const handleSair =()=>{
+  };
+
+  const handleSair = () => {
     signOut();
     navigate('/login');
-  }
- 
+  };
+
+  const handleConta = () => {
+    navigate('/usuario');
+  };
+
+  const handleHome = () => {
+    navigate('/');
+  };
 
   return (
     <AppBar position="static" sx={{ background: 'linear-gradient(135deg, #3f51b5 0%, #9c27b0 100%)' }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-          <Typography
-            variant="h6"
-            noWrap
-            component={Link}
-            to="/"
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            TaskApp
-          </Typography>
-
+          <IconButton onClick={handleHome} sx={{ p: 0, display: 'flex', alignItems: 'center' }}>
+            <img 
+              src={taskAppIcon} 
+              alt="TaskApp Icon" 
+              style={{ 
+                width: 60, 
+                height: 60, 
+                filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5))',
+                transition: 'filter 0.3s ease-in-out'
+              }} 
+              onMouseEnter={(e) => e.currentTarget.style.filter = 'drop-shadow(0 4px 8px rgba(255, 255, 255, 0.8))'}
+              onMouseLeave={(e) => e.currentTarget.style.filter = 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5))'}
+            />
+          </IconButton>
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
@@ -116,7 +121,7 @@ function ResponsiveAppBar({avatar})  {
               ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+
           <Typography
             variant="h5"
             noWrap
@@ -135,6 +140,7 @@ function ResponsiveAppBar({avatar})  {
           >
             LOGO
           </Typography>
+
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
@@ -178,14 +184,11 @@ function ResponsiveAppBar({avatar})  {
                     handleCloseUserMenu();
                     if (setting === 'Login') {
                       handleLogin();
-                    }
-                    else if (setting === 'Cadastro'){
+                    } else if (setting === 'Cadastro') {
                       handleCadastro();
-                    }
-                    else if (setting === 'Sair'){
+                    } else if (setting === 'Sair') {
                       handleSair();
-                    }
-                    else if (setting === 'Conta'){
+                    } else if (setting === 'Conta') {
                       handleConta();
                     }
                   }}

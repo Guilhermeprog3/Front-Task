@@ -51,7 +51,7 @@ export default function LoginCard() {
       }}
     >
       <Paper
-        elevation={3}
+        elevation={10}
         sx={{
           width: 320,
           height: 320,
@@ -59,6 +59,8 @@ export default function LoginCard() {
           textAlign: "center",
           color: "white",
           background: "linear-gradient(135deg, #3f51b5 0%, #9c27b0 100%)",
+          position: "relative",
+          boxShadow: '0 0 10px rgba(0, 255, 255, 0.6), 0 0 20px rgba(0, 255, 255, 0.4), 0 0 40px rgba(0, 255, 255, 0.2)',
         }}
       >
         <form onSubmit={handleSubmit}>
@@ -108,6 +110,18 @@ export default function LoginCard() {
             </Button>
           </Link>
         </Box>
+        <Box
+          sx={{
+            position: "absolute",
+            top: -20,
+            left: -20,
+            right: -20,
+            bottom: -20,
+            borderRadius: 2,
+            zIndex: -1,
+            boxShadow: '0 0 20px rgba(0, 255, 255, 0.6), 0 0 40px rgba(0, 255, 255, 0.4), 0 0 60px rgba(0, 255, 255, 0.2)',
+          }}
+        />
       </Paper>
     </Box>
   );

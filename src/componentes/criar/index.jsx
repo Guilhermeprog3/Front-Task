@@ -6,6 +6,22 @@ import Button from "@mui/material/Button";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useMessage } from "../contexts";
+import { keyframes } from "@emotion/react";
+
+const neonBorder = keyframes`
+  0% {
+    border-color: #3f51b5;
+    box-shadow: 0 0 5px #3f51b5;
+  }
+  50% {
+    border-color: #9c27b0;
+    box-shadow: 0 0 20px #9c27b0;
+  }
+  100% {
+    border-color: #3f51b5;
+    box-shadow: 0 0 5px #3f51b5;
+  }
+`;
 
 export default function SignupCard() {
   const navigate = useNavigate();
@@ -19,6 +35,7 @@ export default function SignupCard() {
     const name = data.get("name");
 
     const url = "https://deploy-task-api.onrender.com/usuario/create";
+
 
     const dataJson = {
       username: name,
@@ -55,13 +72,12 @@ export default function SignupCard() {
       }}
     >
       <Paper
-        elevation={3}
+        elevation={10}
         sx={{
           width: 300,
           padding: 3,
-          textAlign: "center",
-          color: "white",
           background: "linear-gradient(135deg, #3f51b5 0%, #9c27b0 100%)",
+          boxShadow: '0 0 10px rgba(0, 255, 255, 0.6), 0 0 20px rgba(0, 255, 255, 0.4), 0 0 40px rgba(0, 255, 255, 0.2)',
         }}
       >
         <form onSubmit={handleSubmit}>

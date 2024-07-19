@@ -9,7 +9,7 @@ import InfoIcon from '@mui/icons-material/Info';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useMessage } from '../contexts';
-import { format, parseISO, isBefore } from 'date-fns';
+
 
 
 export default function TaskCard({id, title, descriptions, dueDates, status}) {
@@ -21,21 +21,27 @@ export default function TaskCard({id, title, descriptions, dueDates, status}) {
     const url = `https://deploy-task-api.onrender.com/tarefa/status/${id}`;
     const config = {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("@Auth:token")}`
+        Authorization: `Bearer ${localStorage.getItem("@Auth:token")}`,
       },
     };
     const dataJson = {};
+  
     try {
       const response = await axios.put(url, dataJson, config);
-      console.log(response);
-      setCompleted(response.data.status);
-      setMessage('Tarefa marcada como concluída');
+      const newStatus = response.data.status;
+  
+      if (newStatus === 'COMPLETO') {
+        setMessage('Tarefa marcada como concluída');
+      } else if (newStatus === 'INCOMPLETO') {
+        setMessage('Tarefa não foi concluída');
+      }
+  
+      setCompleted(newStatus);
     } catch (error) {
       console.error('Erro ao atualizar a tarefa:', error);
     }
-
   };
-
+  
   const handleDeleteClick = async () => {
     const url = `https://deploy-task-api.onrender.com/tarefa/${id}`;
     const config = {
@@ -69,20 +75,19 @@ export default function TaskCard({id, title, descriptions, dueDates, status}) {
           {title}
         </Typography>
         <Button
-          variant="outlined"
-          onClick={handleCompleteClick}
-          sx={{
-            background: 'COMPLETA'
-              ? 'red'
-              : completed === 'COMPLETA'
-              ? 'linear-gradient(135deg, #4caf50 0%, #2196f3 100%)'
-              : 'linear-gradient(135deg, #3f51b5 0%, #9c27b0 100%)',
-            color: 'white',
-            marginLeft: 'auto',
-          }}
-        >
-          {completed === 'COMPLETA' ? 'Completa' : 'Incompleta' }
-        </Button>
+  variant="outlined"
+  onClick={handleCompleteClick}
+  sx={{
+    background: completed === 'COMPLETO'
+      ? 'linear-gradient(135deg, #4caf50 0%, #2196f3 100%)'
+      : 'linear-gradient(135deg, #3f51b5 0%, #9c27b0 100%)',
+    color: 'white',
+    marginLeft: 'auto',
+  }}
+>
+  {completed === 'COMPLETO' ? 'COMPLETO' : 'INCOMPLETO'}
+</Button>
+
         <IconButton aria-label="delete" onClick={handleDeleteClick}>
           <DeleteIcon style={iconStyle} />
         </IconButton>
