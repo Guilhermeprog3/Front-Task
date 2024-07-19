@@ -21,12 +21,13 @@ export default function TaskCard({id, title, descriptions, dueDates, status}) {
     const url = `https://deploy-task-api.onrender.com/tarefa/status/${id}`;
     const config = {
       headers: {
-        "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("@Auth:token")}`
       },
     };
+    const dataJson = {};
     try {
-      const response = await axios.put(url, config);
+      const response = await axios.put(url, dataJson, config);
+      console.log(response);
       setCompleted(response.data.status);
       setMessage('Tarefa marcada como concluída');
     } catch (error) {
