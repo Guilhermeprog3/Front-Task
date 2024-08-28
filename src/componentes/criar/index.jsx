@@ -34,7 +34,7 @@ export default function SignupCard() {
     const password = data.get("password");
     const name = data.get("name");
 
-    const url = "https://deploy-task-api.onrender.com/register";
+    const url = "https://deploy-task-api.onrender.com/usuario/create";
 
 
     const dataJson = {
