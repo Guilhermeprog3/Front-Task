@@ -24,18 +24,19 @@ const neonBorder = keyframes`
 `;
 
 export default function SignupCard() {
+  const [loading, setLoading] = React.useState(false);
   const navigate = useNavigate();
   const { setMessage } = useMessage();
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    setLoading(true); 
     const data = new FormData(event.currentTarget);
     const email = data.get("email");
     const password = data.get("password");
     const name = data.get("name");
 
     const url = "https://deploy-task-api.onrender.com/register";
-
 
     const dataJson = {
       username: name,
@@ -59,6 +60,9 @@ export default function SignupCard() {
       })
       .catch((error) => {
         console.error("Erro:", error);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
 
@@ -121,8 +125,9 @@ export default function SignupCard() {
                 background: 'linear-gradient(135deg, #9c27b0 0%, #3f51b5 100%)',
               },
             }}
+            disabled={loading}
           >
-            Criar Conta
+            {loading ? "Carregando..." : "Criar"}
           </Button>
         </form>
         <Box sx={{ mt: 2 }}>

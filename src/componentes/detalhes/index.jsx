@@ -19,6 +19,7 @@ export default function SimplePaper() {
   const [taskName, setTaskName] = React.useState('');
   const [endDate, setEndDate] = React.useState('');
   const [description, setDescription] = React.useState('');
+  const [loading, setLoading] = React.useState(false); // Adicionando estado de loading
 
   React.useEffect(() => {
     if (location.state) {
@@ -48,7 +49,9 @@ export default function SimplePaper() {
 
   const handleSubmit = async (event) => {
     event.preventDefault(); 
-    const formattedDate = format(endDate, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
+    setLoading(true); // Definindo loading como true antes da requisição
+
+    const formattedDate = format(new Date(endDate), "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
 
     const dataJson = {
       title: taskName,
@@ -73,6 +76,8 @@ export default function SimplePaper() {
     } catch (error) {
       console.error('Erro ao atualizar a tarefa:', error);
       setMessage('Erro ao atualizar a tarefa');
+    } finally {
+      setLoading(false); // Definindo loading como false após a requisição
     }
   };
 
@@ -112,6 +117,7 @@ export default function SimplePaper() {
             }}
             value={taskName}
             onChange={handleChange}
+            disabled={loading} // Desabilitar enquanto carrega
           />
           <TextField
             name="endDate"
@@ -129,6 +135,7 @@ export default function SimplePaper() {
             }}
             value={endDate}
             onChange={handleChange}
+            disabled={loading} // Desabilitar enquanto carrega
           />
           <TextField
             name="description"
@@ -144,12 +151,25 @@ export default function SimplePaper() {
             }}
             value={description}
             onChange={handleChange}
+            disabled={loading} // Desabilitar enquanto carrega
           />
-          <Button type="submit" variant="contained" color="secondary" sx={{ width: '10rem', margin: '1rem auto', display: 'block', background: 'linear-gradient(135deg, #3f51b5 0%, #9c27b0 100%)'}}>
-            Salvar Alteração
+          <Button 
+            type="submit" 
+            variant="contained" 
+            color="secondary" 
+            sx={{ width: '10rem', margin: '1rem auto', display: 'block', background: 'linear-gradient(135deg, #3f51b5 0%, #9c27b0 100%)'}}
+            disabled={loading} // Desabilitar enquanto carrega
+          >
+            {loading ? 'Salvando...' : 'Salvar Alteração'}
           </Button>
-          <Button onClick={handleCancel} variant="contained" color="secondary" sx={{ width: '10rem', margin: '1rem auto', display: 'block', background: 'linear-gradient(135deg, #3f51b5 0%, #9c27b0 100%)'}}>
-            Voltar
+          <Button 
+            onClick={handleCancel} 
+            variant="contained" 
+            color="secondary" 
+            sx={{ width: '10rem', margin: '1rem auto', display: 'block', background: 'linear-gradient(135deg, #3f51b5 0%, #9c27b0 100%)'}}
+            disabled={loading} // Desabilitar enquanto carrega
+          >
+            {loading ? 'Aguarde...' : 'Voltar'}
           </Button>
         </form>
       </Paper>

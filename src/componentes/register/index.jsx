@@ -14,15 +14,18 @@ export default function SimplePaper() {
   const navigate = useNavigate();
   const { setMessage } = useMessage();
   const { user } = useContext(AuthContext);
+  const [loading, setLoading] = React.useState(false); // Adicionando estado de loading
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true); // Definindo loading como true antes da requisição
+
     const data = new FormData(event.currentTarget);
     const taskName = data.get('taskName');
     const endDate = data.get('endDate');
     const description = data.get('description');
 
-    const formattedDate = format(endDate, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
+    const formattedDate = format(new Date(endDate), "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
 
     const dataJson = {
       title: taskName,
@@ -33,19 +36,21 @@ export default function SimplePaper() {
 
     const url = `https://deploy-task-api.onrender.com/tarefa/create`;
   
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("@Auth:token")}`
-        },
-      };
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("@Auth:token")}`
+      },
+    };
       
-      try {
+    try {
       const response = await axios.post(url, dataJson, config);
       setMessage('A tarefa foi cadastrada com sucesso!');
       navigate('/');
     } catch (error) {
       console.error('Erro ao criar tarefa:', error);
+    } finally {
+      setLoading(false); // Definindo loading como false após a requisição
     }
   };
 
@@ -112,8 +117,9 @@ export default function SimplePaper() {
               display: 'block',
               background: 'linear-gradient(135deg, #3f51b5 0%, #9c27b0 100%)',
             }}
+            disabled={loading} // Desabilitar o botão enquanto carrega
           >
-            Cadastrar
+            {loading ? "Carregando..." : "Cadastrar"}
           </Button>
         </form>
       </Paper>

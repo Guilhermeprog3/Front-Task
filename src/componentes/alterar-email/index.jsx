@@ -14,10 +14,12 @@ export default function UpdateAccountCard() {
   const { setMessage } = useMessage();
   const [password, setPassword] = React.useState('');
   const [name, setName] = React.useState('');
+  const [loading, setLoading] = React.useState(false); // Adicionando estado de loading
   const { user } = useContext(AuthContext);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true); // Definindo loading como true antes da requisição
 
     const dataJson = { 
       username: name,
@@ -25,14 +27,14 @@ export default function UpdateAccountCard() {
       avatar: null
     };
     
-      const url = `https://deploy-task-api.onrender.com/usuario/${user}`;
+    const url = `https://deploy-task-api.onrender.com/usuario/${user}`;
 
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("@Auth:token")}`
-        },
-      };
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("@Auth:token")}`
+      },
+    };
 
     try {
       const response = await axios.put(url, dataJson, config);
@@ -41,6 +43,8 @@ export default function UpdateAccountCard() {
     } catch (error) {
       console.error('Erro ao atualizar a conta:', error);
       setMessage('Erro ao atualizar a conta');
+    } finally {
+      setLoading(false); // Definindo loading como false após a requisição
     }
   };
 
@@ -99,8 +103,9 @@ export default function UpdateAccountCard() {
                 background: 'linear-gradient(135deg, #9c27b0 0%, #3f51b5 100%)',
               },
             }}
+            disabled={loading} // Desabilitar o botão enquanto carrega
           >
-            Atualizar Conta
+            {loading ? "Atualizando..." : "Atualizar Conta"}
           </Button>
         </form>
         <Box sx={{ mt: 2 }}>
